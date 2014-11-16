@@ -25,11 +25,13 @@
 		0529BB6E1A152E3F002ECE6D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0529BB6D1A152E3F002ECE6D /* Security.framework */; };
 		0529BB701A152E46002ECE6D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0529BB6F1A152E46002ECE6D /* StoreKit.framework */; };
 		0529BB721A152E54002ECE6D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0529BB711A152E54002ECE6D /* SystemConfiguration.framework */; };
-		054371E91A15421800382290 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 054371E81A15421800382290 /* RootViewController.m */; };
 		054371EB1A154C7300382290 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EA1A154C7300382290 /* Social.framework */; };
 		054371ED1A154CFA00382290 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EC1A154CFA00382290 /* Accounts.framework */; };
 		054371EF1A15735D00382290 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EE1A15735D00382290 /* FacebookSDK.framework */; };
 		054371F11A157F1800382290 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371F01A157F1800382290 /* ParseFacebookUtils.framework */; };
+		054371F41A16C1D200382290 /* QuestionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 054371F31A16C1D200382290 /* QuestionsTableViewController.m */; };
+		054371F71A16DEB200382290 /* QuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 054371F61A16DEB200382290 /* QuestionsDataSource.m */; };
+		054371FA1A18F84E00382290 /* AddQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 054371F91A18F84E00382290 /* AddQuestionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,12 +68,16 @@
 		0529BB6D1A152E3F002ECE6D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0529BB6F1A152E46002ECE6D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0529BB711A152E54002ECE6D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		054371E71A15421800382290 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		054371E81A15421800382290 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		054371EA1A154C7300382290 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		054371EC1A154CFA00382290 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		054371EE1A15735D00382290 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		054371F01A157F1800382290 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
+		054371F21A16C1D200382290 /* QuestionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsTableViewController.h; sourceTree = "<group>"; };
+		054371F31A16C1D200382290 /* QuestionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsTableViewController.m; sourceTree = "<group>"; };
+		054371F51A16DEB200382290 /* QuestionsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsDataSource.h; sourceTree = "<group>"; };
+		054371F61A16DEB200382290 /* QuestionsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsDataSource.m; sourceTree = "<group>"; };
+		054371F81A18F84E00382290 /* AddQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddQuestionViewController.h; sourceTree = "<group>"; };
+		054371F91A18F84E00382290 /* AddQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddQuestionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,9 +150,13 @@
 			children = (
 				0529BB381A151B7A002ECE6D /* AppDelegate.h */,
 				0529BB391A151B7A002ECE6D /* AppDelegate.m */,
-				054371E71A15421800382290 /* RootViewController.h */,
-				054371E81A15421800382290 /* RootViewController.m */,
+				054371F21A16C1D200382290 /* QuestionsTableViewController.h */,
+				054371F31A16C1D200382290 /* QuestionsTableViewController.m */,
 				0529BB3E1A151B7A002ECE6D /* Main.storyboard */,
+				054371F81A18F84E00382290 /* AddQuestionViewController.h */,
+				054371F91A18F84E00382290 /* AddQuestionViewController.m */,
+				054371F51A16DEB200382290 /* QuestionsDataSource.h */,
+				054371F61A16DEB200382290 /* QuestionsDataSource.m */,
 				0529BB411A151B7A002ECE6D /* Images.xcassets */,
 				0529BB431A151B7A002ECE6D /* LaunchScreen.xib */,
 				0529BB341A151B7A002ECE6D /* Supporting Files */,
@@ -293,8 +303,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0529BB3A1A151B7A002ECE6D /* AppDelegate.m in Sources */,
-				054371E91A15421800382290 /* RootViewController.m in Sources */,
 				0529BB371A151B7A002ECE6D /* main.m in Sources */,
+				054371FA1A18F84E00382290 /* AddQuestionViewController.m in Sources */,
+				054371F71A16DEB200382290 /* QuestionsDataSource.m in Sources */,
+				054371F41A16C1D200382290 /* QuestionsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

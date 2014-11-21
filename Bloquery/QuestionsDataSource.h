@@ -7,16 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ParseDataSource.h"
 
-@interface QuestionsDataSource : NSObject
+@interface QuestionsDataSource : ParseDataSource
 
 @property (nonatomic, strong, readonly) NSArray *questions;
-@property (nonatomic, strong) NSString *className;
+
++ (instancetype)sharedInstanceFor:(NSString *)className;
 
 extern NSString *const QuestionsLoadingFinishedNotification;
-
-
-+ (instancetype)sharedInstance;
 
 - (void)reloadQuestions;
 @end

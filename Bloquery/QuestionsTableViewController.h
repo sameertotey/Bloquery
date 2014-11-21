@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface QuestionsTableViewController : UITableViewController <PFSignUpViewControllerDelegate, PFLogInViewControllerDelegate>
+@interface QuestionsTableViewController : UITableViewController <PFSignUpViewControllerDelegate, PFLogInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @end

@@ -1,24 +1,27 @@
 //
-//  QuestionsDataSource.m
+//  AnswersDataSouce.m
 //  Bloquery
 //
-//  Created by Sameer Totey on 11/14/14.
+//  Created by Sameer Totey on 11/18/14.
 //  Copyright (c) 2014 Sameer Totey. All rights reserved.
 //
 
-#import "QuestionsDataSource.h"
-#import <Parse/Parse.h>
+#import "AnswersDataSource.h"
+#import "Answer.h"
+#import  <Parse/Parse.h>
 
-@interface QuestionsDataSource () {
-    NSMutableArray *_questions;
+
+@interface AnswersDataSource () {
+    NSMutableArray *_answers;
 }
 
-@property (nonatomic, strong, readwrite) NSArray *questions;
+@property (nonatomic, strong, readwrite) NSArray *answers;
 @end
 
-@implementation QuestionsDataSource
+@implementation AnswersDataSource
 
-NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinishedNotification";
+NSString *const AnswersLoadingFinishedNotification = @"AnswersLoadedFinishedNotification";
+
 
 + (instancetype)sharedInstanceFor:(NSString *)className {
     static dispatch_once_t once;
@@ -31,14 +34,16 @@ NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinished
 }
 
 - (void)reload {
-    [self reloadQuestions];
+    // Call the super reload method just in case there is some implementation in the parent class
+    [super reload];
+    [self reloadAnswers];
 }
 
-- (void)reloadQuestions {
-    [self queryLatestQuestions];
+- (void)reloadAnswers {
+    [self queryLatestAnswers];
 }
 
-- (void)queryLatestQuestions {
+- (void)queryLatestAnswers {
     PFQuery *questionsQuery = [PFQuery queryWithClassName:self.className];
     questionsQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [questionsQuery orderByAscending:@"createdAt"];
@@ -48,11 +53,14 @@ NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinished
             // The find succeeded
             NSLog(@"Successfully retrieved %lu chats from cache.", (unsigned long)objects.count);
             //                [_questions removeAllObjects];
-            _questions = [NSMutableArray array];
-            [_questions addObjectsFromArray:objects];
-            self.questions = _questions;
+            _answers = [NSMutableArray array];
+            for (PFObject *answerObject in objects) {
+                Answer *answer = [[Answer alloc]initWithParseObject:answerObject];
+                [_answers addObject:answer];
+            }
+            self.answers = _answers;
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:QuestionsLoadingFinishedNotification object:self];
+             postNotificationName:AnswersLoadingFinishedNotification object:self];
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);

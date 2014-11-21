@@ -9,6 +9,7 @@
 #import "QuestionsTableViewController.h"
 #import "QuestionsDataSource.h"
 #import "AddQuestionViewController.h"
+#import "QuestionDetailViewController.h"
 
 @interface QuestionsTableViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
@@ -75,7 +76,7 @@
 }
 
 - (void)getLatestQuestions {
-    [[QuestionsDataSource sharedInstance] reloadQuestions];
+    [[QuestionsDataSource sharedInstanceFor:@"Questions"] reloadQuestions];
 }
 
 - (void)login {
@@ -100,7 +101,7 @@
 
 // return all the questions from the questions data source
 - (NSArray *)questions {
-    return [QuestionsDataSource sharedInstance].questions;
+    return [QuestionsDataSource sharedInstanceFor:@"Questions"].questions;
 }
 
 #pragma mark - Table view data source
@@ -166,6 +167,15 @@
 }
 */
 
+#pragma mark - Table View Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"didSelectRowAtIndexPath: %@", indexPath);
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"tableView:accessoryButtonTappedForTRowWithIndexPath:%@", indexPath);
+}
 
 #pragma mark - PFLoginViewControllerDelegate
 
@@ -244,14 +254,21 @@
 }
 
 
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSLog(@"In prepare for segue %@", segue);
+    if ([segue.identifier  isEqual: @"QuestionDetail"]) {
+        if ([segue.destinationViewController isKindOfClass:[QuestionDetailViewController class]]) {
+            QuestionDetailViewController *qdvc = (QuestionDetailViewController *)segue.destinationViewController;
+            qdvc.user = [sender textLabel].text;
+            qdvc.question = [sender detailTextLabel].text;
+        }
+    } else {
+        [super prepareForSegue:segue sender:sender];
+    }
 }
 
 

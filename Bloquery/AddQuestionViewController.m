@@ -35,6 +35,7 @@
     PFObject *question = [PFObject objectWithClassName:@"Questions"];
     question[@"text"] = textField.text;
     question[@"user"] = [PFUser currentUser];
+    question[@"date"] = [NSDate date];
     [question saveInBackground];
     [self.navigationController popViewControllerAnimated:YES];
     return YES;

@@ -11,10 +11,11 @@
 @interface AnswersDataSource : ParseDataSource
 
 @property (nonatomic, strong, readonly) NSArray *answers;
+@property (nonatomic, strong) NSString *questionId;
 
 extern NSString *const AnswersLoadingFinishedNotification;
 
-+ (instancetype)sharedInstanceFor:(NSString *)className;
++ (instancetype)sharedInstanceFor:(NSString *)className withQuestionId:(NSString *)questionId;
 
 - (void)reloadAnswers;
 @end

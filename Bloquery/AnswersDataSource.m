@@ -23,13 +23,15 @@
 NSString *const AnswersLoadingFinishedNotification = @"AnswersLoadedFinishedNotification";
 
 
-+ (instancetype)sharedInstanceFor:(NSString *)className {
++ (instancetype)sharedInstanceFor:(NSString *)className withQuestionId:(NSString *)questionId {
     static dispatch_once_t once;
-    static id sharedInstance;
+    static AnswersDataSource *sharedInstance;
     
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] initWithClassName:className];
     });
+    sharedInstance.questionId = questionId;
+    [sharedInstance reload];
     return sharedInstance;
 }
 
@@ -44,11 +46,12 @@ NSString *const AnswersLoadingFinishedNotification = @"AnswersLoadedFinishedNoti
 }
 
 - (void)queryLatestAnswers {
-    PFQuery *questionsQuery = [PFQuery queryWithClassName:self.className];
-    questionsQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    [questionsQuery orderByAscending:@"createdAt"];
+    PFQuery *answersQuery = [PFQuery queryWithClassName:self.className];
+    answersQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    [answersQuery orderByAscending:@"createdAt"];
+    [answersQuery whereKey:@"question" equalTo:[PFObject objectWithoutDataWithClassName:@"Question" objectId:self.questionId]];
     NSLog(@"Trying to retrieve from cache");
-    [questionsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [answersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded
             NSLog(@"Successfully retrieved %lu chats from cache.", (unsigned long)objects.count);

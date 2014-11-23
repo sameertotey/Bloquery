@@ -16,7 +16,6 @@
     
     if (self) {
         self.className = className;
-        [self reload];
     }
     return self;
 }

@@ -8,6 +8,7 @@
 
 #import "QuestionsDataSource.h"
 #import <Parse/Parse.h>
+#import "Question.h"
 
 @interface QuestionsDataSource () {
     NSMutableArray *_questions;
@@ -26,11 +27,13 @@ NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinished
     
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] initWithClassName:className];
+        [sharedInstance reload];
     });
     return sharedInstance;
 }
 
 - (void)reload {
+    [super reload];
     [self reloadQuestions];
 }
 
@@ -49,7 +52,10 @@ NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinished
             NSLog(@"Successfully retrieved %lu chats from cache.", (unsigned long)objects.count);
             //                [_questions removeAllObjects];
             _questions = [NSMutableArray array];
-            [_questions addObjectsFromArray:objects];
+            for (PFObject *questionObject in objects) {
+                Question *question = [[Question alloc]initWithParseObject:questionObject];
+                [_questions addObject:question];
+            }
             self.questions = _questions;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:QuestionsLoadingFinishedNotification object:self];

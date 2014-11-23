@@ -12,7 +12,7 @@
 #import "AnswersDataSource.h"
 #import "AnswerTableViewCell.h"
 
-@interface QuestionDetailViewController ()
+@interface QuestionDetailViewController ()<AnswerTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *userLabel;
 @property (weak, nonatomic) IBOutlet UITextView *questionTextView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *questionTextViewHeightConstraint;
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *answersTableView;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIBarButtonItem *cancelButton;
-
+@property (strong, nonatomic) AnswersDataSource *answerDataSource;
 @end
 
 @implementation QuestionDetailViewController
@@ -29,26 +29,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.userLabel.text = self.user;
-    self.questionTextView.text = self.question;
+    self.userLabel.text = self.question.userName;
+    self.questionTextView.attributedText = [self questionString];
     self.answerTextView.delegate = self;
     self.navigationItem.title = @"Question Detail";
     self.navigationItem.leftBarButtonItem.title = @"Back";
     self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditing)];
     self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEditing)];
-    
-    // Initialize the refresh control.
-//    self.refreshControl = [[UIRefreshControl alloc] init];
-//    self.refreshControl.backgroundColor = [UIColor purpleColor];
-//    self.refreshControl.tintColor = [UIColor whiteColor];
-//    [self.refreshControl addTarget:self
-//                            action:@selector(getLatestAnswers)
-//                  forControlEvents:UIControlEventValueChanged];
-    
+    self.answerDataSource = [AnswersDataSource sharedInstanceFor:@"Answers" withQuestionId:self.question.objectId];
+    [self.answerDataSource reload];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(answersLoaded:) name:AnswersLoadingFinishedNotification object:nil];
+}
+
+- (NSAttributedString *)questionString {
+    NSString *basestring = [NSString stringWithFormat:@"%@ asked %@", self.question.userName, self.question.text];
+    NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
+    mutableParagrahStyle.headIndent = 20.0;
+    mutableParagrahStyle.firstLineHeadIndent = 20.0;
+    mutableParagrahStyle.tailIndent = -20.0;
+    mutableParagrahStyle.paragraphSpacingBefore = 5;
+    NSParagraphStyle *paragraphStyle = mutableParagrahStyle;
+
+    NSMutableAttributedString *mutableUsernameAndQuestionString = [[NSMutableAttributedString alloc] initWithString:basestring attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12], NSParagraphStyleAttributeName : paragraphStyle}];
+    NSRange usernameRange = [basestring rangeOfString:self.question.userName];
+    [mutableUsernameAndQuestionString addAttribute:NSFontAttributeName value:[[UIFont fontWithName:@"HelveticaNeue-Bold" size:11] fontWithSize:12] range:usernameRange];
+    [mutableUsernameAndQuestionString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.345 green:0.315 blue:0.427 alpha:1] range:usernameRange];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(answerRefreshed:) name:AnswerRefreshedNotification object:nil];
-    
+    return mutableUsernameAndQuestionString;
 }
 
 - (void) dealloc {
@@ -79,22 +86,17 @@
 
 - (void)answersLoaded:(NSNotification *)notification {
     [self.answersTableView reloadData];
-//    if (self.refreshControl) {
-//        [self.refreshControl endRefreshing];
-//    }
-}
-
-- (void)answerRefreshed:(NSNotification *)notificaton {
-    [self.answersTableView reloadRowsAtIndexPaths:@[notificaton.object] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)getLatestAnswers {
-    [[AnswersDataSource sharedInstanceFor:@"Answers"] reload];
+    [self.answerDataSource reload];
 }
 
 #pragma mark - Text View Delegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.answerTextView.text = @"";
+    self.answerTextView.backgroundColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     self.navigationItem.rightBarButtonItem = self.doneButton;
 }
@@ -105,7 +107,6 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    NSLog(@"The textview has changed");
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
 }
@@ -128,24 +129,23 @@
 //        [self.answersTableView reloadData];
         
         // going for the parsing
-        PFObject *newMessage = [PFObject objectWithClassName:@"Answers"];
-        [newMessage setObject:self.answerTextView.text forKey:@"text"];
-        [newMessage setObject:[PFUser currentUser] forKey:@"user"];
-        [newMessage setObject:[NSDate date] forKey:@"date"];
-        [newMessage saveInBackground];
+        Answer *answer = [[Answer alloc] init];
+        answer.date = [NSDate date];
+        answer.text = self.answerTextView.text;
+        answer.questionId = self.question.objectId;
+        [answer saveAnswer];
         self.answerTextView.text = @"";
     }
     [self loadAnswers];
 }
 
 - (void)doneEditing {
-    NSLog(@"done editing");
     [self.answerTextView resignFirstResponder];
     [self saveAnswer];
 }
 
 - (void)cancelEditing {
-    NSLog(@"cancel edititng");
+    self.answerTextView.text = @"";
     [self.answerTextView resignFirstResponder];
 }
 
@@ -162,11 +162,11 @@
 #pragma mark - Load Parse data
 
 - (void)loadAnswers {
-    [[AnswersDataSource sharedInstanceFor:@"Answers"] reload];
+    [self.answerDataSource reload];
 }
 
 - (NSArray *)answers {
-    return [AnswersDataSource sharedInstanceFor:@"Answers"].answers;
+    return self.answerDataSource.answers;
 }
 
 #pragma mark - Table view data source
@@ -188,10 +188,15 @@
     // Configure the cell...
     cell.answer = [self answers][indexPath.row];
     cell.path = indexPath;
+    cell.delegate = self;
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Answer *answer = [self answers][indexPath.row];
     NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
@@ -253,5 +258,15 @@
  }
  */
 
+#pragma mark - AnswerTableViewCellDelegate
+
+- (void)answerRefreshedFor:(AnswerTableViewCell *)cell {
+    NSLog(@"received delegate for cell %@", cell.path);
+    [self.answersTableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)likeButtonPressedFor:(Answer *)answer {
+    [answer liked];
+}
 
 @end

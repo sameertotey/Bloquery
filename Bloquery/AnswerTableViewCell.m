@@ -8,10 +8,16 @@
 
 #import "AnswerTableViewCell.h"
 
+@interface AnswerTableViewCell ()
+@property (weak, nonatomic) IBOutlet UILabel *userNameAndTimeLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndTimeLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (weak, nonatomic) IBOutlet UILabel *answerDescriptionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDescriptionLabelHeightConstraint;
+
+@end
 
 @implementation AnswerTableViewCell
-
-NSString *const AnswerRefreshedNotification = @"AnswerRefreshedNotification";
 
 - (void)awakeFromNib {
     // Initialization code
@@ -44,19 +50,17 @@ NSString *const AnswerRefreshedNotification = @"AnswerRefreshedNotification";
     self.answerDescriptionLabel.text = answer.text;
     
     [self.answer addObserver:self forKeyPath:@"Answer" options:0 context:nil];
-    [self.contentView setNeedsLayout];
-    [self.contentView setNeedsDisplay];
 }
-
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == self.answer && [keyPath isEqualToString:@"Answer"]) {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:AnswerRefreshedNotification object:self.path];
-
+        [self.delegate answerRefreshedFor:self];
     }
 }
-
+- (IBAction)likeButtonPressed:(id)sender {
+    NSLog(@"Like button pressed");
+    [self.delegate likeButtonPressedFor:self.answer];
+}
 
 - (void) layoutSubviews {
     [super layoutSubviews];
@@ -83,7 +87,6 @@ NSString *const AnswerRefreshedNotification = @"AnswerRefreshedNotification";
     CGRect textBounds = [self.answerDescriptionLabel.text boundingRectWithSize:maxTextSize options:options attributes:@{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle} context:ctx];
     self.answerDescriptionLabelHeightConstraint.constant = textBounds.size.height;
     [self.answerDescriptionLabel.text drawInRect:textBounds withAttributes:@{NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle}];
-    
 }
 
 @end

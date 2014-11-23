@@ -21,7 +21,7 @@
 - (instancetype)initWithParseObject:(PFObject *)answer {
     self = [super init];
     if (self) {
-        self.objectId = answer[@"objectId"];
+        self.objectId = answer.objectId;
         self.text = answer[@"text"];
         self.date = answer[@"date"];
         PFUser *user = answer[@"user"];
@@ -35,6 +35,23 @@
         }];
     }
     return self;
+}
+
+- (void)saveAnswer {
+    PFObject *newAnswer = [PFObject objectWithClassName:@"Answers"];
+    newAnswer[@"text"] = self.text;
+    newAnswer[@"question"] = [PFObject objectWithoutDataWithClassName:@"Question" objectId:self.questionId];
+    newAnswer[@"user"] = [PFUser currentUser];
+    newAnswer[@"date"] = [NSDate date];
+    [newAnswer saveInBackground];
+}
+
+- (void)liked {
+    PFObject *newLike = [PFObject objectWithClassName:@"Likes"];
+    newLike[@"answer"] = [PFObject objectWithoutDataWithClassName:@"Answers" objectId:self.objectId];
+    newLike[@"user"] = [PFUser currentUser];
+    newLike[@"date"] = [NSDate date];
+    [newLike saveInBackground];
 }
 
 - (NSString *)objectId {
@@ -70,6 +87,13 @@
         _userId = [[NSString alloc]init];
     }
     return _userId;
+}
+
+- (NSString *)questionId {
+    if (!_questionId) {
+        _questionId = [[NSString alloc] init];
+    }
+    return _questionId;
 }
 
 @end

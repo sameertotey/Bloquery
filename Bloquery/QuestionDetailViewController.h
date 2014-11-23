@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Question.h"
+
 
 @interface QuestionDetailViewController : UIViewController <UITextViewDelegate, UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) NSString *user;
-@property (nonatomic, strong) NSString *question;
+@property (nonatomic, strong) Question *question;
 @end

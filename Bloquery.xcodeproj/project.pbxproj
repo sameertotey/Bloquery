@@ -29,6 +29,7 @@
 		0532C9931A1BF62600A37259 /* AnswersDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C9921A1BF62600A37259 /* AnswersDataSource.m */; };
 		0532C9961A1D0E6600A37259 /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C9951A1D0E6600A37259 /* QuestionTableViewCell.m */; };
 		0532C9991A1DA02F00A37259 /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C9981A1DA02F00A37259 /* Answer.m */; };
+		0532C99C1A201A5C00A37259 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C99B1A201A5C00A37259 /* Question.m */; };
 		054371EB1A154C7300382290 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EA1A154C7300382290 /* Social.framework */; };
 		054371ED1A154CFA00382290 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EC1A154CFA00382290 /* Accounts.framework */; };
 		054371EF1A15735D00382290 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EE1A15735D00382290 /* FacebookSDK.framework */; };
@@ -82,6 +83,8 @@
 		0532C9951A1D0E6600A37259 /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 		0532C9971A1DA02F00A37259 /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
 		0532C9981A1DA02F00A37259 /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
+		0532C99A1A201A5C00A37259 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
+		0532C99B1A201A5C00A37259 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		054371EA1A154C7300382290 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		054371EC1A154CFA00382290 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		054371EE1A15735D00382290 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				0532C9921A1BF62600A37259 /* AnswersDataSource.m */,
 				0532C9971A1DA02F00A37259 /* Answer.h */,
 				0532C9981A1DA02F00A37259 /* Answer.m */,
+				0532C99A1A201A5C00A37259 /* Question.h */,
+				0532C99B1A201A5C00A37259 /* Question.m */,
 				0532C98E1A1BEE3800A37259 /* ParseDataSource.h */,
 				0532C98F1A1BEE3800A37259 /* ParseDataSource.m */,
 				0529BB411A151B7A002ECE6D /* Images.xcassets */,
@@ -341,6 +346,7 @@
 				0532C9991A1DA02F00A37259 /* Answer.m in Sources */,
 				054371FA1A18F84E00382290 /* AddQuestionViewController.m in Sources */,
 				054371FD1A1AEF1400382290 /* QuestionDetailViewController.m in Sources */,
+				0532C99C1A201A5C00A37259 /* Question.m in Sources */,
 				054371F71A16DEB200382290 /* QuestionsDataSource.m in Sources */,
 				054371F41A16C1D200382290 /* QuestionsTableViewController.m in Sources */,
 			);

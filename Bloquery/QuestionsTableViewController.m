@@ -10,8 +10,10 @@
 #import "QuestionsDataSource.h"
 #import "AddQuestionViewController.h"
 #import "QuestionDetailViewController.h"
+#import "Question.h"
+#import "QuestionTableViewCell.h"
 
-@interface QuestionsTableViewController ()
+@interface QuestionsTableViewController () <QuestionTableViewCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
 
 @end
@@ -57,7 +59,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-// toggle the Login and Logoff funcitons on pressing the left bar button of the root controller
+// toggle the Login and Logoff functons on pressing the left bar button of the root controller
 - (IBAction)loginLogoff:(UIBarButtonItem *)sender {
     if ([PFUser currentUser]) {
         [PFUser logOut];
@@ -118,23 +120,49 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *questionIdentifier = @"questionCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:questionIdentifier forIndexPath:indexPath];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:questionIdentifier];
-    }
+    QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:questionIdentifier forIndexPath:indexPath];
+   
     // Configure the cell...
-    PFUser *user = [[[self questions] objectAtIndex:indexPath.row] objectForKey:@"user"];
-    [user fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (!error) {
-            cell.textLabel.text = [object objectForKey:@"username"];
-        }
-    }];
-    cell.detailTextLabel.text = [[[self questions] objectAtIndex:indexPath.row] objectForKey:@"text"];;
+    cell.question = [self questions][indexPath.row];
+    cell.path = indexPath;
+    cell.delegate = self;
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {
+    
+    NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
+    mutableParagrahStyle.headIndent = 20.0;
+    mutableParagrahStyle.firstLineHeadIndent = 20.0;
+    mutableParagrahStyle.tailIndent = -20.0;
+    mutableParagrahStyle.paragraphSpacingBefore = 5;
+    NSParagraphStyle *paragraphStyle = mutableParagrahStyle;
+    
+    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
+    CGFloat halfSize = CGRectGetWidth(self.view.bounds) - 10;
+    CGSize maxLabelSize = CGSizeMake(halfSize, MAXFLOAT);
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin;
+    UIFont *font = [UIFont systemFontOfSize:15];
+    
+    NSDictionary *textAttributes = @{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle};
+    Question *question = [self questions][indexPath.row];
 
+    NSDate *theDate = question.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm a"];
+    NSString *timeString = [formatter stringFromDate:theDate];
+
+    CGRect usernameBounds = [question.userName boundingRectWithSize:maxLabelSize options:options attributes:textAttributes context:ctx];
+    
+    CGRect timeBounds = [timeString boundingRectWithSize:maxLabelSize options:options attributes:textAttributes context:ctx];
+    
+    CGSize maxTextSize = CGSizeMake(halfSize * 2, MAXFLOAT);
+    CGRect textBounds = [question.text boundingRectWithSize:maxTextSize options:options attributes:textAttributes context:ctx];
+    
+    
+    CGFloat height = usernameBounds.size.height + timeBounds.size.height + textBounds.size.height;
+    return height + 40;
+}
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -263,13 +291,21 @@
     if ([segue.identifier  isEqual: @"QuestionDetail"]) {
         if ([segue.destinationViewController isKindOfClass:[QuestionDetailViewController class]]) {
             QuestionDetailViewController *qdvc = (QuestionDetailViewController *)segue.destinationViewController;
-            qdvc.user = [sender textLabel].text;
-            qdvc.question = [sender detailTextLabel].text;
+            if ([sender isKindOfClass:[QuestionTableViewCell class]]) {
+                QuestionTableViewCell *sourceCell = (QuestionTableViewCell *)sender;
+                qdvc.question = sourceCell.question;
+            }
         }
     } else {
         [super prepareForSegue:segue sender:sender];
     }
 }
 
+
+#pragma mark - QuestionTableViewCellDelegate
+
+- (void)questionRefreshedFor:(QuestionTableViewCell *)cell {
+    [self.tableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 @end

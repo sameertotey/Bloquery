@@ -17,6 +17,18 @@
 
 
 - (void)awakeFromNib {
+    [self initialize];
+}
+
+- (instancetype)init {
+    self  = [super init];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
     self.dateAndTimeLabel = [[UILabel alloc] init];
     self.dateAndTimeLabel.numberOfLines = 0;
     self.dateAndTimeLabel.backgroundColor = [UIColor clearColor];
@@ -32,7 +44,6 @@
     }
     [self createConstraints];
 }
-
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

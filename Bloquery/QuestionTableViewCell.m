@@ -7,15 +7,14 @@
 //
 
 #import "QuestionTableViewCell.h"
+#import "UserNameAndDateTimeView.h"
 
 @interface QuestionTableViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *userNameButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameButtonHeightConstraint;
-@property (weak, nonatomic) IBOutlet UITextView *questionTextView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *questionTextViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *timeLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *questionTextLabel;
+
 
 @end
 
@@ -43,13 +42,11 @@
 
 - (void)setQuestion:(Question *)question {
     _question = question;
-    NSDate *theDate = self.question.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm a"];
-
-    self.timeLabel.text = [formatter stringFromDate:theDate];
-    self.questionTextView.text = _question.text;
-    [self.userNameButton setTitle:self.question.userName forState:UIControlStateNormal];
+  
+    self.userNameAndDateTimeView.userName = question.userName;
+    self.userNameAndDateTimeView.dateAndTime = question.date;
+    self.questionTextLabel.text = question.text;
+    
     [self.question addObserver:self forKeyPath:@"Question" options:0 context:nil];
 }
 
@@ -99,41 +96,13 @@
 - (void) layoutSubviews {
     [super layoutSubviews];
     // Before layout, calculate the intrinsic size of the labels (the size they "want" to be), and set the appropriate constraints
+    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.contentView.bounds), MAXFLOAT);
     
-    NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
-    mutableParagrahStyle.headIndent = 20.0;
-    mutableParagrahStyle.firstLineHeadIndent = 20.0;
-    mutableParagrahStyle.tailIndent = -20.0;
-    mutableParagrahStyle.paragraphSpacingBefore = 5;
-    NSParagraphStyle *paragraphStyle = mutableParagrahStyle;
+    CGSize userNameAndDateTimeSize = [self.userNameAndDateTimeView sizeThatFits:maxSize];
+    self.userNameAndDateTimeHeightConstraint.constant = userNameAndDateTimeSize.height;
     
-    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
-    CGFloat halfSize = CGRectGetWidth(self.contentView.bounds) / 2 - 10;
-    CGSize maxLabelSize = CGSizeMake(halfSize, MAXFLOAT);
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin;
-    UIFont *font = [UIFont systemFontOfSize:17];
-    
-    NSDictionary *textAttributes = @{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle};
-    NSString *userName = self.question.userName;
-    NSLog(@"username %@", userName);
-    CGRect usernameBounds = [userName boundingRectWithSize:maxLabelSize options:options attributes:textAttributes context:ctx];
-    
-    CGRect timeBounds = [self.timeLabel.text boundingRectWithSize:maxLabelSize options:options attributes:textAttributes context:ctx];
-    
-    CGSize maxTextSize = CGSizeMake(halfSize * 2, MAXFLOAT);
-    CGRect textBounds = [self.questionTextView.text boundingRectWithSize:maxTextSize options:options attributes:textAttributes context:ctx];
-    
-    
-    NSLog(@"Constraints are %f %f %f %f %f %f", usernameBounds.size.width, usernameBounds.size.height, timeBounds.size.width,  timeBounds.size.height, textBounds.size.width, textBounds.size.height);
-    self.userNameButtonHeightConstraint.constant = usernameBounds.size.height;
-    self.timeLabelHeightConstraint.constant = usernameBounds.size.height;
-    self.questionTextViewHeightConstraint.constant = textBounds.size.height;
-    
-}
-
-- (void)updateConstraints {
-    NSLog(@"updateConstraints");
-    [super updateConstraints];
+    [self updateConstraints];
+    [self setNeedsDisplay];
 }
 
 @end

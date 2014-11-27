@@ -191,8 +191,12 @@
     UserNameAndDateTimeView *userNameAndDate = [[UserNameAndDateTimeView alloc] init];
     userNameAndDate.dateAndTime = answer.date;
     userNameAndDate.userName = answer.userName;
-    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.view.bounds) - 80, CGFLOAT_MAX);
-    CGSize userNameAndDateTimeViewSize = [self.userNameAndDateTimeView sizeThatFits:maxSize];
+    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.view.bounds) - 80,MAXFLOAT);
+    userNameAndDate.frame = CGRectMake(0, 0, maxSize.width, 200);
+
+    [userNameAndDate setNeedsLayout];
+    [userNameAndDate layoutIfNeeded];
+    CGSize userNameAndDateTimeViewSize = [userNameAndDate sizeThatFits:maxSize];
     CGFloat cellHeight = userNameAndDateTimeViewSize.height;
     
     UITextView *textView = [[UITextView alloc] init];

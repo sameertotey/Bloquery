@@ -20,54 +20,33 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MYM-EM-J4I" id="Vuz-Mf-aHu">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsR-FD-eO2">
-                                            <rect key="frame" x="28" y="38" width="544" height="21"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHH-18-0ia" customClass="UserNameAndDateTimeView">
+                                            <rect key="frame" x="8" y="8" width="584" height="44"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="8AZ-S1-w11"/>
+                                                <constraint firstAttribute="height" constant="44" id="Txl-ae-M7r"/>
                                             </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dl-vK-sHe">
+                                            <rect key="frame" x="8" y="52" width="584" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LeV-IV-t1m">
-                                            <rect key="frame" x="8" y="59" width="584" height="63"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="63" id="fy2-fa-I0u"/>
-                                            </constraints>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bOa-lW-PKg">
-                                            <rect key="frame" x="28" y="8" width="544" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="k81-7s-AEj"/>
-                                            </constraints>
-                                            <state key="normal" title="Button">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="LeV-IV-t1m" firstAttribute="top" secondItem="RsR-FD-eO2" secondAttribute="bottom" id="EEQ-cE-ut8"/>
-                                        <constraint firstItem="RsR-FD-eO2" firstAttribute="top" secondItem="bOa-lW-PKg" secondAttribute="bottom" id="MKe-wV-qJ3"/>
-                                        <constraint firstItem="LeV-IV-t1m" firstAttribute="trailing" secondItem="Vuz-Mf-aHu" secondAttribute="trailingMargin" id="OJd-xd-cpQ"/>
-                                        <constraint firstItem="RsR-FD-eO2" firstAttribute="leading" secondItem="Vuz-Mf-aHu" secondAttribute="leadingMargin" constant="20" id="QVd-Mq-SNc"/>
-                                        <constraint firstItem="bOa-lW-PKg" firstAttribute="leading" secondItem="Vuz-Mf-aHu" secondAttribute="leadingMargin" constant="20" id="asB-Mv-eBf"/>
-                                        <constraint firstItem="LeV-IV-t1m" firstAttribute="leading" secondItem="Vuz-Mf-aHu" secondAttribute="leadingMargin" id="caF-hG-CZ5"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="bOa-lW-PKg" secondAttribute="trailing" constant="20" id="n5b-fE-ucD"/>
-                                        <constraint firstItem="bOa-lW-PKg" firstAttribute="top" secondItem="Vuz-Mf-aHu" secondAttribute="topMargin" id="oYR-uK-5r7"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="RsR-FD-eO2" secondAttribute="trailing" constant="20" id="ozz-ty-AGI"/>
+                                        <constraint firstItem="yHH-18-0ia" firstAttribute="leading" secondItem="Vuz-Mf-aHu" secondAttribute="leadingMargin" id="HJu-mW-ERN"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="yHH-18-0ia" secondAttribute="trailing" id="Mf2-O8-lUD"/>
+                                        <constraint firstItem="5Dl-vK-sHe" firstAttribute="leading" secondItem="Vuz-Mf-aHu" secondAttribute="leadingMargin" id="aTH-3e-izE"/>
+                                        <constraint firstItem="5Dl-vK-sHe" firstAttribute="top" secondItem="yHH-18-0ia" secondAttribute="bottom" id="kyf-s1-1l1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="5Dl-vK-sHe" secondAttribute="trailing" id="tb7-Ba-JSb"/>
+                                        <constraint firstItem="yHH-18-0ia" firstAttribute="top" secondItem="Vuz-Mf-aHu" secondAttribute="topMargin" id="vxk-25-0jh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="questionTextView" destination="LeV-IV-t1m" id="e54-8E-Hd2"/>
-                                    <outlet property="questionTextViewHeightConstraint" destination="fy2-fa-I0u" id="itD-nq-6cw"/>
-                                    <outlet property="timeLabel" destination="RsR-FD-eO2" id="HPg-HC-dq7"/>
-                                    <outlet property="timeLabelHeightConstraint" destination="8AZ-S1-w11" id="aWc-rb-Ocd"/>
-                                    <outlet property="userNameButton" destination="bOa-lW-PKg" id="8VV-XX-f1t"/>
-                                    <outlet property="userNameButtonHeightConstraint" destination="k81-7s-AEj" id="S3N-7j-CR6"/>
+                                    <outlet property="questionTextLabel" destination="5Dl-vK-sHe" id="7d7-qe-0Lf"/>
+                                    <outlet property="userNameAndDateTimeHeightConstraint" destination="Txl-ae-M7r" id="Did-7a-Xc0"/>
+                                    <outlet property="userNameAndDateTimeView" destination="yHH-18-0ia" id="ZfC-Aa-dcJ"/>
                                     <segue destination="5DL-go-e2r" kind="show" identifier="QuestionDetail" id="p63-hT-08s"/>
                                 </connections>
                             </tableViewCell>
@@ -151,7 +130,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bpO-s9-FbS"/>
                                 </constraints>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>

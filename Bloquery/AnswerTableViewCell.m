@@ -47,10 +47,11 @@
     
     self.userNameAndDateTimeView.userName = answer.userName;
     self.userNameAndDateTimeView.dateAndTime = answer.date;
+    self.likeCountLabel.text = [NSString stringWithFormat:@"Likes:%d", answer.likes];
     self.answerDescriptionTextView.Text = answer.text;
-    self.answerDescriptionTextView.textContainer.widthTracksTextView = YES;
-    self.answerDescriptionTextView.textContainer.heightTracksTextView = YES;
-    self.answerDescriptionTextView.textContainerInset = UIEdgeInsetsZero;
+//    self.answerDescriptionTextView.textContainer.widthTracksTextView = YES;
+//    self.answerDescriptionTextView.textContainer.heightTracksTextView = YES;
+//    self.answerDescriptionTextView.textContainerInset = UIEdgeInsetsZero;
 
     [self.answer addObserver:self forKeyPath:@"Answer" options:0 context:nil];
 }

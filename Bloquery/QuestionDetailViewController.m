@@ -198,9 +198,9 @@
     UITextView *textView = [[UITextView alloc] init];
     textView.text = answer.text;
     CGSize textViewSize = [textView sizeThatFits:maxSize];
-    cellHeight += textViewSize.height;
+    cellHeight += textViewSize.height * 1.2;
     
-    return cellHeight + 40;
+    return cellHeight + 44;
 }
 
 // Override to support conditional editing of the table view.
@@ -238,7 +238,8 @@
 
 - (void)answerRefreshedFor:(AnswerTableViewCell *)cell {
     NSLog(@"received delegate for cell %@", cell.path);
-    [self.answersTableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.answersTableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
+    [self.answersTableView reloadData];
 }
 
 - (void)likeButtonPressedFor:(Answer *)answer {

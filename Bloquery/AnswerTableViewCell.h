@@ -22,5 +22,4 @@
 @property (strong, nonatomic) Answer *answer;
 @property (strong, nonatomic) NSIndexPath *path;
 @property (weak, nonatomic) id<AnswerTableViewCellDelegate> delegate;
-@property (assign, nonatomic) CGFloat height;
 @end

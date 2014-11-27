@@ -33,6 +33,16 @@
                 [self didChangeValueForKey:@"Answer"];
             }
         }];
+        PFQuery *likesCount = [PFQuery queryWithClassName:@"Likes"];
+        [likesCount whereKey:@"answer" equalTo:[PFObject objectWithoutDataWithClassName:@"Answers" objectId:self.objectId]];
+        [likesCount countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+            if (!error) {
+                // The count request succeeded. Log the count
+                [self willChangeValueForKey:@"Answer"];
+                self.likes = number;
+                [self didChangeValueForKey:@"Answer"];
+            }
+        }];
     }
     return self;
 }
@@ -52,6 +62,9 @@
     newLike[@"user"] = [PFUser currentUser];
     newLike[@"date"] = [NSDate date];
     [newLike saveInBackground];
+    [self willChangeValueForKey:@"Answer"];
+    self.likes++;
+    [self didChangeValueForKey:@"Answer"];
 }
 
 - (NSString *)objectId {

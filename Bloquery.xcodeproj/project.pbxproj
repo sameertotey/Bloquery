@@ -30,6 +30,7 @@
 		0532C9961A1D0E6600A37259 /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C9951A1D0E6600A37259 /* QuestionTableViewCell.m */; };
 		0532C9991A1DA02F00A37259 /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C9981A1DA02F00A37259 /* Answer.m */; };
 		0532C99C1A201A5C00A37259 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C99B1A201A5C00A37259 /* Question.m */; };
+		0532C99F1A239DC000A37259 /* UserNameAndDateTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0532C99E1A239DC000A37259 /* UserNameAndDateTimeView.m */; };
 		054371EB1A154C7300382290 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EA1A154C7300382290 /* Social.framework */; };
 		054371ED1A154CFA00382290 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EC1A154CFA00382290 /* Accounts.framework */; };
 		054371EF1A15735D00382290 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054371EE1A15735D00382290 /* FacebookSDK.framework */; };
@@ -85,6 +86,8 @@
 		0532C9981A1DA02F00A37259 /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
 		0532C99A1A201A5C00A37259 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		0532C99B1A201A5C00A37259 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		0532C99D1A239DC000A37259 /* UserNameAndDateTimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserNameAndDateTimeView.h; sourceTree = "<group>"; };
+		0532C99E1A239DC000A37259 /* UserNameAndDateTimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNameAndDateTimeView.m; sourceTree = "<group>"; };
 		054371EA1A154C7300382290 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		054371EC1A154CFA00382290 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		054371EE1A15735D00382290 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				0532C9941A1D0E6600A37259 /* QuestionTableViewCell.h */,
 				0532C9951A1D0E6600A37259 /* QuestionTableViewCell.m */,
 				0529BB3E1A151B7A002ECE6D /* Main.storyboard */,
+				0532C99D1A239DC000A37259 /* UserNameAndDateTimeView.h */,
+				0532C99E1A239DC000A37259 /* UserNameAndDateTimeView.m */,
 				05C14E721A1B1CC0007FB52D /* AnswerTableViewCell.h */,
 				05C14E731A1B1CC0007FB52D /* AnswerTableViewCell.m */,
 				054371F81A18F84E00382290 /* AddQuestionViewController.h */,
@@ -342,6 +347,7 @@
 				0529BB3A1A151B7A002ECE6D /* AppDelegate.m in Sources */,
 				05C14E741A1B1CC0007FB52D /* AnswerTableViewCell.m in Sources */,
 				0532C9901A1BEE3800A37259 /* ParseDataSource.m in Sources */,
+				0532C99F1A239DC000A37259 /* UserNameAndDateTimeView.m in Sources */,
 				0529BB371A151B7A002ECE6D /* main.m in Sources */,
 				0532C9991A1DA02F00A37259 /* Answer.m in Sources */,
 				054371FA1A18F84E00382290 /* AddQuestionViewController.m in Sources */,

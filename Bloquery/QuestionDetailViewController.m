@@ -11,9 +11,11 @@
 #import "Answer.h"
 #import "AnswersDataSource.h"
 #import "AnswerTableViewCell.h"
+#import "UserNameAndDateTimeView.h"
 
 @interface QuestionDetailViewController ()<AnswerTableViewCellDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *questionTextView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *questionTextViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *answerTextView;
@@ -29,8 +31,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.userLabel.text = self.question.userName;
+    self.userNameAndDateTimeView.userName = self.question.userName;
+    self.userNameAndDateTimeView.dateAndTime = self.question.date;
     self.questionTextView.attributedText = [self questionString];
+    self.questionTextView.textContainer.widthTracksTextView = YES;
+    self.questionTextView.textContainer.heightTracksTextView = YES;
+    self.questionTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.answerTextView.delegate = self;
     self.navigationItem.title = @"Question Detail";
     self.navigationItem.leftBarButtonItem.title = @"Back";
@@ -65,18 +71,14 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
-    UIFont *font = [UIFont systemFontOfSize:17];
-    CGSize boundingRect = CGSizeMake(CGRectGetWidth(self.questionTextView.frame), MAXFLOAT);
-    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGFLOAT_MAX);
+
+    CGSize userNameAndDateTimeViewSize = [self.userNameAndDateTimeView sizeThatFits:maxSize];
+    self.userNameAndDateTimeViewHeightConstraint.constant = userNameAndDateTimeViewSize.height;
     
-    CGRect textRect = [self.questionTextView.text boundingRectWithSize:boundingRect options:options attributes:@{NSFontAttributeName:font} context:ctx];
-    self.questionTextViewHeightConstraint.constant = CGRectGetHeight(textRect);
-    
-    boundingRect = CGSizeMake(CGRectGetWidth(self.answerTextView.frame), MAXFLOAT);
-    textRect = [self.answerTextView.text boundingRectWithSize:boundingRect options:options attributes:@{NSFontAttributeName:font} context:ctx];
-    self.answerTextViewHeightConstraint.constant = CGRectGetHeight(textRect);
-    
+    CGSize questionTextViewSize = [self.questionTextView sizeThatFits:maxSize];
+    self.questionTextViewHeightConstraint.constant = questionTextViewSize.height;
+    [self.questionTextView scrollRangeToVisible:NSRangeFromString(self.questionTextView.text)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,20 +116,6 @@
 - (void)saveAnswer {
     
     if (self.answerTextView.text.length > 0) {
-//        // updating the table immediately
-//        NSArray *keys = [NSArray arrayWithObjects:@"text", @"user", @"date", nil];
-//        NSArray *objects = [NSArray arrayWithObjects:self.answerTextView.text, [PFUser currentUser], [NSDate date], nil];
-//        NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-////        [[self answers] addObject:dictionary];
-//        
-//        NSMutableArray *insertIndexPaths = [NSMutableArray array];
-//        NSIndexPath *newPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//        [insertIndexPaths addObject:newPath];
-//        [self.answersTableView beginUpdates];
-//        [self.answersTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationTop];
-//        [self.answersTableView endUpdates];
-//        [self.answersTableView reloadData];
-        
         // going for the parsing
         Answer *answer = [[Answer alloc] init];
         answer.date = [NSDate date];
@@ -179,6 +167,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [[self answers] count];
+//    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,34 +186,21 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     Answer *answer = [self answers][indexPath.row];
-    NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
-    mutableParagrahStyle.headIndent = 20.0;
-    mutableParagrahStyle.firstLineHeadIndent = 20.0;
-    mutableParagrahStyle.tailIndent = -20.0;
-    mutableParagrahStyle.paragraphSpacingBefore = 5;
-    NSParagraphStyle *paragraphStyle = mutableParagrahStyle;
+
+    UserNameAndDateTimeView *userNameAndDate = [[UserNameAndDateTimeView alloc] init];
+    userNameAndDate.dateAndTime = answer.date;
+    userNameAndDate.userName = answer.userName;
+    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.view.bounds) - 80, CGFLOAT_MAX);
+    CGSize userNameAndDateTimeViewSize = [self.userNameAndDateTimeView sizeThatFits:maxSize];
+    CGFloat cellHeight = userNameAndDateTimeViewSize.height;
     
-    NSDate *theDate = answer.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm a"];
-    NSString *timeString = [formatter stringFromDate:theDate];
+    UITextView *textView = [[UITextView alloc] init];
+    textView.text = answer.text;
+    CGSize textViewSize = [textView sizeThatFits:maxSize];
+    cellHeight += textViewSize.height;
     
-    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
-    CGSize maxLabelSize = CGSizeMake(CGRectGetWidth(self.view.bounds) - 40, MAXFLOAT);
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin;
-    UIFont *font = [UIFont systemFontOfSize:17];
-    NSString *userNameAndTime = [NSString stringWithFormat:@"%@ - %@", answer.userName, timeString];
-    CGRect usernameBounds = [userNameAndTime boundingRectWithSize:maxLabelSize options:options attributes:@{NSFontAttributeName : font} context:ctx];
-    
-    CGFloat height = usernameBounds.size.height;
-    
-    CGSize maxTextSize = CGSizeMake(CGRectGetWidth(self.view.bounds) - 40, MAXFLOAT);
-    font = [UIFont systemFontOfSize:16];
-    CGRect textBounds = [answer.text boundingRectWithSize:maxTextSize options:options attributes:@{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle} context:ctx];
-    height += textBounds.size.height;
-    return height + 60;
+    return cellHeight + 40;
 }
 
 // Override to support conditional editing of the table view.

@@ -7,13 +7,16 @@
 //
 
 #import "AnswerTableViewCell.h"
+#import "UserNameAndDateTimeView.h"
 
 @interface AnswerTableViewCell ()
-@property (weak, nonatomic) IBOutlet UILabel *userNameAndTimeLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndTimeLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeViewHeightConstraint;
+
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
-@property (weak, nonatomic) IBOutlet UILabel *answerDescriptionLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDescriptionLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet UITextView *answerDescriptionTextView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDescriptionTextViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 
 @end
 
@@ -25,6 +28,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+    self.separatorInset = UIEdgeInsetsZero;
 
     // Configure the view for the selected state
 }
@@ -41,16 +45,16 @@
 - (void)setAnswer:(Answer *)answer {
     _answer = answer;
     
-    NSDate *theDate = answer.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm a"];
-    NSString *timeString = [formatter stringFromDate:theDate];
-    
-    self.userNameAndTimeLabel.text = [NSString stringWithFormat:@"%@ - %@", answer.userName, timeString];
-    self.answerDescriptionLabel.text = answer.text;
-    
+    self.userNameAndDateTimeView.userName = answer.userName;
+    self.userNameAndDateTimeView.dateAndTime = answer.date;
+    self.answerDescriptionTextView.Text = answer.text;
+    self.answerDescriptionTextView.textContainer.widthTracksTextView = YES;
+    self.answerDescriptionTextView.textContainer.heightTracksTextView = YES;
+    self.answerDescriptionTextView.textContainerInset = UIEdgeInsetsZero;
+
     [self.answer addObserver:self forKeyPath:@"Answer" options:0 context:nil];
 }
+
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == self.answer && [keyPath isEqualToString:@"Answer"]) {
@@ -65,28 +69,15 @@
 - (void) layoutSubviews {
     [super layoutSubviews];
     // Before layout, calculate the intrinsic size of the labels (the size they "want" to be), and set the appropriate constraints
+    CGSize maxSize = CGSizeMake(CGRectGetWidth(self.contentView.bounds), MAXFLOAT);
 
-    NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
-    mutableParagrahStyle.headIndent = 20.0;
-    mutableParagrahStyle.firstLineHeadIndent = 20.0;
-    mutableParagrahStyle.tailIndent = -20.0;
-    mutableParagrahStyle.paragraphSpacingBefore = 5;
-    NSParagraphStyle *paragraphStyle = mutableParagrahStyle;
+    CGSize userNameAndDateTimeSize = [self.userNameAndDateTimeView sizeThatFits:maxSize];
+    self.userNameAndDateTimeViewHeightConstraint.constant = userNameAndDateTimeSize.height;
     
-    NSStringDrawingContext *ctx = [[NSStringDrawingContext alloc] init];
-    CGSize maxLabelSize = CGSizeMake(CGRectGetWidth(self.contentView.bounds) - 40, MAXFLOAT);
-    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin;
-    UIFont *font = [UIFont systemFontOfSize:17];
-    CGRect usernameBounds = [self.userNameAndTimeLabel.text boundingRectWithSize:maxLabelSize options:options attributes:@{NSFontAttributeName : font} context:ctx];
-
-    self.userNameAndTimeLabelHeightConstraint.constant = usernameBounds.size.height;
-    [self.userNameAndTimeLabel.text drawInRect:usernameBounds withAttributes:@{NSFontAttributeName : font}];
-    
-    CGSize maxTextSize = CGSizeMake(CGRectGetWidth(self.contentView.bounds) - 40, MAXFLOAT);
-    font = [UIFont systemFontOfSize:16];
-    CGRect textBounds = [self.answerDescriptionLabel.text boundingRectWithSize:maxTextSize options:options attributes:@{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle} context:ctx];
-    self.answerDescriptionLabelHeightConstraint.constant = textBounds.size.height;
-    [self.answerDescriptionLabel.text drawInRect:textBounds withAttributes:@{NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle}];
+    CGSize answerDescriptionTextViewSize = [self.answerDescriptionTextView sizeThatFits:maxSize];
+    self.answerDescriptionTextViewHeightConstraint.constant = answerDescriptionTextViewSize.height;
+    [self updateConstraints];
+    [self setNeedsDisplay];
 }
 
 @end

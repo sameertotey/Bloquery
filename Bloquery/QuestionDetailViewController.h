@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Question.h"
+#import "UserNameAndDateTimeView.h"
 
 
-@interface QuestionDetailViewController : UIViewController <UITextViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface QuestionDetailViewController : UIViewController <UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UserNameAndDateTimeViewDelegate>
 @property (nonatomic, strong) Question *question;
 @end

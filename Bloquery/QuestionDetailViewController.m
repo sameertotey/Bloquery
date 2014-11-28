@@ -33,6 +33,7 @@
     // Do any additional setup after loading the view.
     self.userNameAndDateTimeView.userName = self.question.userName;
     self.userNameAndDateTimeView.dateAndTime = self.question.date;
+    self.userNameAndDateTimeView.delegate = self;
     self.questionTextView.attributedText = [self questionString];
     self.questionTextView.textContainer.widthTracksTextView = YES;
     self.questionTextView.textContainer.heightTracksTextView = YES;
@@ -178,6 +179,7 @@
     cell.answer = [self answers][indexPath.row];
     cell.path = indexPath;
     cell.delegate = self;
+    cell.userNameAndDateTimeView.delegate = self;
     return cell;
 }
 
@@ -248,6 +250,13 @@
 
 - (void)likeButtonPressedFor:(Answer *)answer {
     [answer liked];
+}
+
+#pragma mark - UserNameAndDateAndTimeDelegate
+
+- (void)userNameButtonPressedFor:(NSString *)userName {
+    [self performSegueWithIdentifier:@"showUserProfile" sender:self];
+    NSLog(@"segue to userprofie");
 }
 
 @end

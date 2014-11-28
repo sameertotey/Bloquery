@@ -10,7 +10,6 @@
 #import "UserNameAndDateTimeView.h"
 
 @interface AnswerTableViewCell ()
-@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;

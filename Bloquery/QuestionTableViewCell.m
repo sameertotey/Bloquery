@@ -7,11 +7,9 @@
 //
 
 #import "QuestionTableViewCell.h"
-#import "UserNameAndDateTimeView.h"
 
 @interface QuestionTableViewCell ()
 
-@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeHeightConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *questionTextLabel;
 
@@ -61,23 +59,6 @@
     
     NSDictionary *textAttributes = @{NSFontAttributeName : font, NSParagraphStyleAttributeName: paragraphStyle};
     return textAttributes;
-}
-
-- (NSAttributedString *)timeString {
-    NSDate *theDate = self.question.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm a"];
-    NSString *baseString = [formatter stringFromDate:theDate];
-    NSDictionary *textAttributes = [self getTextAttributes];
-    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:textAttributes];
-    return mutableString;
-}
-
-- (NSAttributedString *)userNameString {
-    NSString *baseString = self.question.userName;
-    NSDictionary *textAttributes = [self getTextAttributes];
-    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:textAttributes];
-    return mutableString;
 }
 
 - (NSAttributedString *)questionText {

@@ -126,6 +126,7 @@
     cell.question = [self questions][indexPath.row];
     cell.path = indexPath;
     cell.delegate = self;
+    cell.userNameAndDateTimeView.delegate = self;
     return cell;
 }
 
@@ -305,6 +306,13 @@
 - (void)questionRefreshedFor:(QuestionTableViewCell *)cell {
 //    [self.tableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView reloadData];
+}
+
+#pragma mark - UserNameAndDateAndTimeDelegate
+
+- (void)userNameButtonPressedFor:(NSString *)userName {
+    [self performSegueWithIdentifier:@"showUserProfile" sender:self];
+    NSLog(@"segue to userprofie");
 }
 
 @end

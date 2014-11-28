@@ -47,7 +47,7 @@
                                     <outlet property="questionTextLabel" destination="5Dl-vK-sHe" id="7d7-qe-0Lf"/>
                                     <outlet property="userNameAndDateTimeHeightConstraint" destination="Txl-ae-M7r" id="Did-7a-Xc0"/>
                                     <outlet property="userNameAndDateTimeView" destination="yHH-18-0ia" id="ZfC-Aa-dcJ"/>
-                                    <segue destination="5DL-go-e2r" kind="show" identifier="QuestionDetail" id="p63-hT-08s"/>
+                                    <segue destination="5DL-go-e2r" kind="show" identifier="QuestionDetail" id="cOl-ij-Nha"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -70,6 +70,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="questionsTableView" destination="lfR-Vd-6VA" id="G4O-y4-gv0"/>
+                        <segue destination="XHE-QH-eBN" kind="show" identifier="showUserProfile" id="7Ui-OU-iWJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnZ-re-GD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -253,11 +254,38 @@
                         <outlet property="questionTextViewHeightConstraint" destination="bpO-s9-FbS" id="T5d-EW-je5"/>
                         <outlet property="userNameAndDateTimeView" destination="fP0-7O-exV" id="JoI-0C-YFd"/>
                         <outlet property="userNameAndDateTimeViewHeightConstraint" destination="NXO-9q-P23" id="H4u-aL-zd0"/>
+                        <segue destination="XHE-QH-eBN" kind="show" identifier="showUserProfile" id="EPg-7X-jOC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXx-J7-Ehe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1563" y="722"/>
+        </scene>
+        <!--User Profile View Controller-->
+        <scene sceneID="Woa-rX-W29">
+            <objects>
+                <viewController id="XHE-QH-eBN" customClass="UserProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nFM-FT-vDx"/>
+                        <viewControllerLayoutGuide type="bottom" id="y6v-va-cyt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lrF-xr-0V8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Co-xL-7hP">
+                                <rect key="frame" x="279" y="194" width="89" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ePj-Kf-zg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-557" y="496"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xuk-Bf-o1Q">
@@ -276,4 +304,7 @@
             <point key="canvasLocation" x="-3135" y="222"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="7Ui-OU-iWJ"/>
+    </inferredMetricsTieBreakers>
 </document>

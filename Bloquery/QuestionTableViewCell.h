@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Question.h"
+#import "UserNameAndDateTimeView.h"
+
 
 @class QuestionTableViewCell;
 
@@ -20,6 +22,7 @@
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) NSIndexPath *path;
 @property (weak, nonatomic) id<QuestionTableViewCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
 
 
 @end

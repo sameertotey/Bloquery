@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "UserNameAndDateTimeView.h"
 
-@interface QuestionsTableViewController : UITableViewController <PFSignUpViewControllerDelegate, PFLogInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface QuestionsTableViewController : UITableViewController <PFSignUpViewControllerDelegate, PFLogInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UserNameAndDateTimeViewDelegate>
 
 @end

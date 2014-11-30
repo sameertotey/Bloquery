@@ -30,6 +30,9 @@
                 [self willChangeValueForKey:@"Question"];
                 self.userName = object[@"username"];
                 self.userId = object[@"objectId"];
+                if ([object isKindOfClass:[PFUser class]]) {
+                    self.user = (PFUser *)object;
+                }
                 [self didChangeValueForKey:@"Question"];
             }
         }];

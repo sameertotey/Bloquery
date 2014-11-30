@@ -135,7 +135,7 @@
 
 - (void)userNameButtonPressed:(UIButton *)sender {
     NSLog(@"userNameButtonPressed %@", sender.titleLabel.text);
-    [self.delegate userNameButtonPressedFor:sender.titleLabel.text];
+    [self.delegate userNameButtonPressedFor:self.user];
 }
 
 @end

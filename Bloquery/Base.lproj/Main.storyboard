@@ -261,7 +261,7 @@
             </objects>
             <point key="canvasLocation" x="-1563" y="722"/>
         </scene>
-        <!--User Profile View Controller-->
+        <!--User Profile-->
         <scene sceneID="Woa-rX-W29">
             <objects>
                 <viewController id="XHE-QH-eBN" customClass="UserProfileViewController" sceneMemberID="viewController">
@@ -273,15 +273,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Co-xL-7hP">
-                                <rect key="frame" x="279" y="194" width="89" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Co-xL-7hP">
+                                <rect key="frame" x="36" y="84" width="528" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEr-hs-tb6">
+                                <rect key="frame" x="36" y="165" width="528" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="HmX-L7-O9w"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XHE-QH-eBN" id="wZQ-P4-Ngi"/>
+                                </connections>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email address" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKz-gQ-xYj">
+                                <rect key="frame" x="36" y="124" width="528" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FEr-hs-tb6" firstAttribute="top" secondItem="xKz-gQ-xYj" secondAttribute="bottom" constant="20" id="CbI-qG-h6G"/>
+                            <constraint firstItem="3Co-xL-7hP" firstAttribute="top" secondItem="nFM-FT-vDx" secondAttribute="bottom" constant="20" id="GIo-Ic-HIy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xKz-gQ-xYj" secondAttribute="trailing" constant="20" id="PLT-cL-5sG"/>
+                            <constraint firstItem="3Co-xL-7hP" firstAttribute="leading" secondItem="lrF-xr-0V8" secondAttribute="leadingMargin" constant="20" id="SMQ-p7-s0o"/>
+                            <constraint firstItem="FEr-hs-tb6" firstAttribute="leading" secondItem="lrF-xr-0V8" secondAttribute="leadingMargin" constant="20" id="V9j-4W-Irn"/>
+                            <constraint firstItem="xKz-gQ-xYj" firstAttribute="top" secondItem="3Co-xL-7hP" secondAttribute="bottom" constant="20" id="Vcy-F6-Kt2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FEr-hs-tb6" secondAttribute="trailing" constant="20" id="XCf-vn-XzS"/>
+                            <constraint firstItem="xKz-gQ-xYj" firstAttribute="leading" secondItem="lrF-xr-0V8" secondAttribute="leadingMargin" constant="20" id="jak-XD-QIH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FEr-hs-tb6" secondAttribute="trailing" constant="20" id="tsb-gs-aFb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3Co-xL-7hP" secondAttribute="trailing" constant="20" id="yfD-9W-O5J"/>
+                        </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="User Profile" id="mp9-pC-OEA">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="WG1-lX-meg">
+                            <connections>
+                                <action selector="saveUserProfile:" destination="XHE-QH-eBN" id="hVE-RY-ReI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="emailAddressLabel" destination="xKz-gQ-xYj" id="EX3-sR-CgH"/>
+                        <outlet property="saveButton" destination="WG1-lX-meg" id="BZQ-SX-jU7"/>
+                        <outlet property="userDescriptionTextView" destination="FEr-hs-tb6" id="hbb-r5-0Y5"/>
+                        <outlet property="userDescriptionTextViewHeight" destination="HmX-L7-O9w" id="UvI-Ga-JkB"/>
+                        <outlet property="userNameLabel" destination="3Co-xL-7hP" id="NYr-fj-rFx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ePj-Kf-zg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -305,6 +352,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Ui-OU-iWJ"/>
+        <segue reference="EPg-7X-jOC"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,16 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @protocol UserNameAndDateTimeViewDelegate <NSObject>
 
-- (void)userNameButtonPressedFor:(NSString *)userName;
+- (void)userNameButtonPressedFor:(PFUser *)user;
 
 @end
 
 @interface UserNameAndDateTimeView : UIView
 @property (nonatomic, strong)NSString *userName;
 @property (nonatomic, strong)NSDate *dateAndTime;
+@property (nonatomic, strong)PFUser *user;
 @property (nonatomic, strong)IBOutlet UIButton *userNameButton;
 @property (nonatomic, strong)IBOutlet UILabel *dateAndTimeLabel;
 @property (nonatomic, weak)id<UserNameAndDateTimeViewDelegate> delegate;

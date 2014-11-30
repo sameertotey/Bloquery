@@ -45,6 +45,7 @@
     _answer = answer;
     
     self.userNameAndDateTimeView.userName = answer.userName;
+    self.userNameAndDateTimeView.user = answer.user;
     self.userNameAndDateTimeView.dateAndTime = answer.date;
     self.likeCountLabel.text = [NSString stringWithFormat:@"Likes:%lu", (unsigned long)answer.likes];
     self.answerDescriptionTextView.Text = answer.text;

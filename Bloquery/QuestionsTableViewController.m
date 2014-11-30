@@ -13,6 +13,7 @@
 #import "Question.h"
 #import "QuestionTableViewCell.h"
 #import "UserNameAndDateTimeView.h"
+#import "UserProfileViewController.h"
 
 @interface QuestionsTableViewController () <QuestionTableViewCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
@@ -200,9 +201,6 @@
     NSLog(@"didSelectRowAtIndexPath: %@", indexPath);
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"tableView:accessoryButtonTappedForTRowWithIndexPath:%@", indexPath);
-}
 
 #pragma mark - PFLoginViewControllerDelegate
 
@@ -287,12 +285,19 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier  isEqual: @"QuestionDetail"]) {
+    if ([segue.identifier  isEqualToString:@"QuestionDetail"]) {
         if ([segue.destinationViewController isKindOfClass:[QuestionDetailViewController class]]) {
             QuestionDetailViewController *qdvc = (QuestionDetailViewController *)segue.destinationViewController;
             if ([sender isKindOfClass:[QuestionTableViewCell class]]) {
                 QuestionTableViewCell *sourceCell = (QuestionTableViewCell *)sender;
                 qdvc.question = sourceCell.question;
+            }
+        }
+    } else if ([segue.identifier isEqualToString:@"showUserProfile"]) {
+        if ([segue.destinationViewController isKindOfClass:[UserProfileViewController class]]) {
+            UserProfileViewController *upvc = (UserProfileViewController *)segue.destinationViewController;
+            if ([sender isKindOfClass:[PFUser class]]) {
+                upvc.user = sender;
             }
         }
     } else {
@@ -310,9 +315,8 @@
 
 #pragma mark - UserNameAndDateAndTimeDelegate
 
-- (void)userNameButtonPressedFor:(NSString *)userName {
-    [self performSegueWithIdentifier:@"showUserProfile" sender:self];
-    NSLog(@"segue to userprofie");
+- (void)userNameButtonPressedFor:(PFUser *)user {
+    [self performSegueWithIdentifier:@"showUserProfile" sender:user];
 }
 
 @end

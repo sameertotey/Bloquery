@@ -43,6 +43,7 @@
   
     self.userNameAndDateTimeView.userName = question.userName;
     self.userNameAndDateTimeView.dateAndTime = question.date;
+    self.userNameAndDateTimeView.user = question.user;
     self.questionTextLabel.text = question.text;
     
     [self.question addObserver:self forKeyPath:@"Question" options:0 context:nil];

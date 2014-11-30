@@ -12,6 +12,7 @@
 #import "AnswersDataSource.h"
 #import "AnswerTableViewCell.h"
 #import "UserNameAndDateTimeView.h"
+#import "UserProfileViewController.h"
 
 @interface QuestionDetailViewController ()<AnswerTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
@@ -33,6 +34,7 @@
     // Do any additional setup after loading the view.
     self.userNameAndDateTimeView.userName = self.question.userName;
     self.userNameAndDateTimeView.dateAndTime = self.question.date;
+    self.userNameAndDateTimeView.user = self.question.user;
     self.userNameAndDateTimeView.delegate = self;
     self.questionTextView.attributedText = [self questionString];
     self.questionTextView.textContainer.widthTracksTextView = YES;
@@ -138,15 +140,24 @@
     [self.answerTextView resignFirstResponder];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showUserProfile"]) {
+        if ([segue.destinationViewController isKindOfClass:[UserProfileViewController class]]) {
+            UserProfileViewController *upvc = (UserProfileViewController *)segue.destinationViewController;
+            if ([sender isKindOfClass:[PFUser class]]) {
+                upvc.user = sender;
+            }
+        }
+    } else {
+        [super prepareForSegue:segue sender:sender];
+    }
 }
-*/
 
 #pragma mark - Load Parse data
 
@@ -243,7 +254,6 @@
 #pragma mark - AnswerTableViewCellDelegate
 
 - (void)answerRefreshedFor:(AnswerTableViewCell *)cell {
-    NSLog(@"received delegate for cell %@", cell.path);
 //    [self.answersTableView reloadRowsAtIndexPaths:@[cell.path] withRowAnimation:UITableViewRowAnimationNone];
     [self.answersTableView reloadData];
 }
@@ -254,9 +264,8 @@
 
 #pragma mark - UserNameAndDateAndTimeDelegate
 
-- (void)userNameButtonPressedFor:(NSString *)userName {
-    [self performSegueWithIdentifier:@"showUserProfile" sender:self];
-    NSLog(@"segue to userprofie");
+- (void)userNameButtonPressedFor:(PFUser *)user {
+    [self performSegueWithIdentifier:@"showUserProfile" sender:user];
 }
 
 @end

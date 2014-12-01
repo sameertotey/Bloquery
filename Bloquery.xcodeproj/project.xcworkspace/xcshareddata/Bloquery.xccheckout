@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>22D7B9FE-1B44-4DE4-983D-3BA89893A639</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Bloquery</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>26B780D45C9F195E2A8C9C6F6FCFEA845381BC82</key>
+		<string>https://github.com/sameertotey/Bloquery.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Bloquery.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>26B780D45C9F195E2A8C9C6F6FCFEA845381BC82</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sameertotey/Bloquery.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>26B780D45C9F195E2A8C9C6F6FCFEA845381BC82</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>26B780D45C9F195E2A8C9C6F6FCFEA845381BC82</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Bloquery</string>
+		</dict>
+	</array>
+</dict>
+</plist>

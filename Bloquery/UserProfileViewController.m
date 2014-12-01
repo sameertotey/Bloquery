@@ -16,10 +16,20 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userDescriptionTextViewHeight;
 @property (weak, nonatomic) IBOutlet UILabel *emailAddressLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userImageViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userImageViewHeightContraint;
+@property (weak, nonatomic) IBOutlet UIScrollView *profileScrollView;
+@property (weak, nonatomic) IBOutlet UIButton *addPictureButton;
+@property (strong, nonatomic) UIImage *userImage;
+@property (assign, nonatomic) BOOL isImageUpdated;
 
 @end
 
 @implementation UserProfileViewController
+
+#define USER_IMAGE_WIDTH 200
+#define USER_IMAGE_HEIGHT 200
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,11 +40,55 @@
     self.userNameLabel.text = self.user.username;
     self.userDescriptionTextView.text = self.user[@"description"];
     self.emailAddressLabel.text = self.user[@"email"];
+    [self setImage];
+}
+
+- (void)setImage {
+    self.isImageUpdated = NO;
+    self.userImageViewHeightContraint.constant = USER_IMAGE_HEIGHT;
+    self.userImageViewWidthConstraint.constant = USER_IMAGE_WIDTH;
+    if (self.user[@"imageFile"]) {
+        PFFile *imageFile = self.user[@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            if (!error) {
+                self.userImage = [UIImage imageWithData:imageData];
+                self.userImageView.image = self.userImage;
+            }
+        }];
+        [self.addPictureButton setTitle:@"Replace" forState:UIControlStateNormal];
+    } else {
+        [self.addPictureButton setTitle:@"Add" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)imageButtonTouched:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        [self showCamera];
+    else {
+        NSLog(@"The device does not have a camera");
+    }
+}
+
+- (void)showCamera {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (IBAction)saveUserProfile:(id)sender {
     if ([self.user isDirty]) {
-        [self.user saveInBackground];
+        if (self.isImageUpdated) {
+            [self.user[@"imageFile"] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                        [self.user saveInBackground];
+                }
+            }];
+        } else {
+            [self.user saveInBackground];
+        }
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -93,5 +147,38 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self.addPictureButton setTitle:@"Replace" forState:UIControlStateNormal];
+    
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(USER_IMAGE_WIDTH, USER_IMAGE_HEIGHT));
+    [chosenImage drawInRect: CGRectMake(0, 0, USER_IMAGE_WIDTH, USER_IMAGE_HEIGHT)];
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    self.userImageView.image = smallImage;
+    
+    // Upload image
+    NSData *imageData = UIImageJPEGRepresentation(smallImage, 0.5f);
+
+    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
+    self.user[@"imageFile"] = imageFile;
+    self.isImageUpdated = YES;
+
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
 
 @end

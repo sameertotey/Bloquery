@@ -49,7 +49,7 @@ NSString *const QuestionsLoadingFinishedNotification = @"QuestionsLoadedFinished
     [questionsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded
-            NSLog(@"Successfully retrieved %lu chats from cache.", (unsigned long)objects.count);
+            NSLog(@"Successfully retrieved %lu questions from cache.", (unsigned long)objects.count);
             //                [_questions removeAllObjects];
             _questions = [NSMutableArray array];
             for (PFObject *questionObject in objects) {

@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, SortField) {
 }
 
 - (NSAttributedString *)questionString {
-    NSString *basestring = [NSString stringWithFormat:@"%@ asked %@", self.question.userName, self.question.text];
+    NSString *basestring = [NSString stringWithString:self.question.text];
     NSMutableParagraphStyle *mutableParagrahStyle = [[NSMutableParagraphStyle alloc] init];
     mutableParagrahStyle.headIndent = 20.0;
     mutableParagrahStyle.firstLineHeadIndent = 20.0;

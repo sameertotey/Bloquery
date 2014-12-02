@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Question.h"
 #import "UserNameAndDateTimeView.h"
+#import "AnswerTableViewCell.h"
 
 
-@interface QuestionDetailViewController : UIViewController <UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UserNameAndDateTimeViewDelegate>
+@interface QuestionDetailViewController : UIViewController <UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UserNameAndDateTimeViewDelegate, UIActionSheetDelegate, AnswerTableViewCellDelegate>
 @property (nonatomic, strong) Question *question;
 @end

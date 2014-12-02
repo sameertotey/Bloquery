@@ -127,7 +127,7 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKH-73-yHL">
                                 <rect key="frame" x="16" y="116" width="568" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bpO-s9-FbS"/>
                                 </constraints>
@@ -137,7 +137,7 @@
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your answer" translatesAutoresizingMaskIntoConstraints="NO" id="8Sz-tN-X4s">
                                 <rect key="frame" x="16" y="160" width="568" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="YDC-5C-IgI"/>
                                 </constraints>
@@ -147,9 +147,10 @@
                                     <outlet property="delegate" destination="5DL-go-e2r" id="FPC-QS-0JG"/>
                                 </connections>
                             </textView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="181" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="PgK-Qi-DBg">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PgK-Qi-DBg">
                                 <rect key="frame" x="16" y="214" width="568" height="342"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="answerCell" rowHeight="172" id="vce-f4-QpP" customClass="AnswerTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
@@ -223,14 +224,39 @@
                                     <constraint firstAttribute="height" constant="44" id="NXO-9q-P23"/>
                                 </constraints>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLa-lI-oNb">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Sort Answers By" style="plain" id="g2W-3y-bM6">
+                                        <connections>
+                                            <action selector="sortBy:" destination="5DL-go-e2r" id="n7R-z6-oIS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" id="qzT-JC-mb9">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="NBW-Rn-QnK">
+                                            <rect key="frame" x="125" y="7.5" width="123" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Asc"/>
+                                                <segment title="Desc"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="sortType:" destination="5DL-go-e2r" eventType="valueChanged" id="SnE-TP-SSY"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="8Sz-tN-X4s" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" id="3M0-7l-T6c"/>
                             <constraint firstItem="PgK-Qi-DBg" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" id="6mc-FX-4NM"/>
                             <constraint firstItem="KKH-73-yHL" firstAttribute="trailing" secondItem="PWK-AR-A6Q" secondAttribute="trailingMargin" id="70g-py-UH8"/>
+                            <constraint firstItem="tqw-it-Jhq" firstAttribute="top" secondItem="HLa-lI-oNb" secondAttribute="bottom" id="AfO-vE-X2g"/>
                             <constraint firstItem="8Sz-tN-X4s" firstAttribute="trailing" secondItem="PWK-AR-A6Q" secondAttribute="trailingMargin" id="BrR-P4-6dm"/>
                             <constraint firstItem="8Sz-tN-X4s" firstAttribute="top" secondItem="KKH-73-yHL" secondAttribute="bottom" id="DnD-bI-cia"/>
+                            <constraint firstItem="HLa-lI-oNb" firstAttribute="top" secondItem="PgK-Qi-DBg" secondAttribute="bottom" id="FtH-fC-y15"/>
                             <constraint firstItem="8Sz-tN-X4s" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" id="GFQ-Pa-ZNg"/>
                             <constraint firstItem="KKH-73-yHL" firstAttribute="top" secondItem="fP0-7O-exV" secondAttribute="bottom" id="NEx-R5-LDh"/>
                             <constraint firstItem="PgK-Qi-DBg" firstAttribute="top" secondItem="8Sz-tN-X4s" secondAttribute="bottom" constant="10" id="RqW-Ty-xUz"/>
@@ -238,14 +264,14 @@
                             <constraint firstItem="KKH-73-yHL" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" id="YKw-ij-iwM"/>
                             <constraint firstItem="fP0-7O-exV" firstAttribute="top" secondItem="3zL-3x-9uH" secondAttribute="bottom" constant="8" id="baS-ha-GTB"/>
                             <constraint firstItem="8Sz-tN-X4s" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" id="fqO-Kp-xOf"/>
+                            <constraint firstItem="HLa-lI-oNb" firstAttribute="leading" secondItem="PWK-AR-A6Q" secondAttribute="leadingMargin" constant="-16" id="ied-Mv-kZ8"/>
                             <constraint firstItem="PgK-Qi-DBg" firstAttribute="trailing" secondItem="PWK-AR-A6Q" secondAttribute="trailingMargin" id="kTC-LS-g3Y"/>
-                            <constraint firstItem="tqw-it-Jhq" firstAttribute="top" secondItem="PgK-Qi-DBg" secondAttribute="bottom" id="nkU-7V-fA1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fP0-7O-exV" secondAttribute="trailing" id="xxT-L8-jPY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HLa-lI-oNb" secondAttribute="trailing" constant="-16" id="zXw-6S-P2z"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Question Detail" id="ahz-kb-0JC"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="answerTextView" destination="8Sz-tN-X4s" id="Y2X-QE-TPN"/>
                         <outlet property="answerTextViewHeightConstraint" destination="YDC-5C-IgI" id="dDt-Wk-cVp"/>
@@ -288,7 +314,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="tuc-8D-iRm"/>
                                 </constraints>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>

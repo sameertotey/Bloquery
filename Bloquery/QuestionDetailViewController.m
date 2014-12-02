@@ -10,11 +10,15 @@
 #import <Parse/Parse.h>
 #import "Answer.h"
 #import "AnswersDataSource.h"
-#import "AnswerTableViewCell.h"
 #import "UserNameAndDateTimeView.h"
 #import "UserProfileViewController.h"
 
-@interface QuestionDetailViewController ()<AnswerTableViewCellDelegate>
+typedef NS_ENUM(NSInteger, SortField) {
+    SortByDate,
+    SortByLikes
+};
+
+@interface QuestionDetailViewController ()
 @property (weak, nonatomic) IBOutlet UserNameAndDateTimeView *userNameAndDateTimeView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameAndDateTimeViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UITextView *questionTextView;
@@ -25,6 +29,9 @@
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIBarButtonItem *cancelButton;
 @property (strong, nonatomic) AnswersDataSource *answerDataSource;
+@property (assign, nonatomic) BOOL sortAscending;
+@property (assign, nonatomic) SortField sortField;
+@property (strong, nonatomic) NSArray *sortedAnswers;    // of Answers
 @end
 
 @implementation QuestionDetailViewController
@@ -90,7 +97,8 @@
 }
 
 - (void)answersLoaded:(NSNotification *)notification {
-    [self.answersTableView reloadData];
+    // copy the answers locally to the sorted array
+    [self sortAnswers];
 }
 
 - (void)getLatestAnswers {
@@ -178,7 +186,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[self answers] count];
+    return [self.sortedAnswers count];
 //    return 0;
 }
 
@@ -187,7 +195,7 @@
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:answerIdentifier forIndexPath:indexPath];
  
     // Configure the cell...
-    cell.answer = [self answers][indexPath.row];
+    cell.answer = self.sortedAnswers[indexPath.row];
     cell.path = indexPath;
     cell.delegate = self;
     cell.userNameAndDateTimeView.delegate = self;
@@ -199,7 +207,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Answer *answer = [self answers][indexPath.row];
+    Answer *answer = self.sortedAnswers[indexPath.row];
 
     UserNameAndDateTimeView *userNameAndDate = [[UserNameAndDateTimeView alloc] init];
     userNameAndDate.dateAndTime = answer.date;
@@ -266,6 +274,54 @@
 
 - (void)userNameButtonPressedFor:(PFUser *)user {
     [self performSegueWithIdentifier:@"showUserProfile" sender:user];
+}
+
+#pragma mark - sorting the table view
+- (IBAction)sortType:(UISegmentedControl *)sender {
+    if ([(UISegmentedControl *)sender selectedSegmentIndex] == 0) {
+        self.sortAscending = YES;
+    } else {
+        self.sortAscending = NO;
+    }
+    // now sort the table again
+    [self sortAnswers];
+}
+
+- (IBAction)sortBy:(id)sender {
+    UIActionSheet *actionSheet;
+    actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort Answers by"
+                                              delegate:self
+                                     cancelButtonTitle:@"Cancel"
+                                destructiveButtonTitle:nil
+                                     otherButtonTitles:@"Date", @"Popularity", nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != 2) {
+        self.sortField = buttonIndex;
+        // now sort the table again
+        [self sortAnswers];
+    }
+}
+
+- (void)sortAnswers {
+    NSString *key;
+    switch (self.sortField) {
+        case SortByDate:
+            key = @"date";
+            break;
+        case SortByLikes:
+            key = @"likes";
+            break;
+    }
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key
+                                                 ascending:self.sortAscending];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    self.sortedAnswers = [[self answers] sortedArrayUsingDescriptors:sortDescriptors];
+    [self.answersTableView reloadData];
 }
 
 @end

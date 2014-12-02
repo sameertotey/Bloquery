@@ -227,13 +227,14 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLa-lI-oNb">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Sort Answers By" style="plain" id="g2W-3y-bM6">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="uj8-o3-EAb"/>
+                                    <barButtonItem title="Sort Answer By" style="plain" id="g2W-3y-bM6">
                                         <connections>
                                             <action selector="sortBy:" destination="5DL-go-e2r" id="n7R-z6-oIS"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" id="qzT-JC-mb9">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="NBW-Rn-QnK">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="NBW-Rn-QnK">
                                             <rect key="frame" x="125" y="7.5" width="123" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>

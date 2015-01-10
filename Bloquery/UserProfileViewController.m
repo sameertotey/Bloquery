@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPictureButton;
 @property (strong, nonatomic) UIImage *userImage;
 @property (assign, nonatomic) BOOL isImageUpdated;
-
+@property (strong, nonatomic) UIBarButtonItem *logoff;
 @end
 
 @implementation UserProfileViewController
@@ -41,6 +41,19 @@
     self.userDescriptionTextView.text = self.user[@"description"];
     self.emailAddressLabel.text = self.user[@"email"];
     [self setImage];
+    
+    if (self.user != [PFUser currentUser]) {
+        self.view.userInteractionEnabled = NO;
+        self.navigationItem.rightBarButtonItems = @[];
+        self.addPictureButton.hidden = YES;
+    } else {
+        self.logoff = [[UIBarButtonItem alloc] initWithTitle:@"Logoff" style:UIBarButtonItemStylePlain target:self action:@selector(logoffUser)];
+        self.navigationItem.rightBarButtonItems = @[self.logoff, self.saveButton];
+    }
+}
+
+- (void)logoffUser {
+    [PFUser logOut];
 }
 
 - (void)setImage {
@@ -53,9 +66,9 @@
             if (!error) {
                 self.userImage = [UIImage imageWithData:imageData];
                 self.userImageView.image = self.userImage;
+                [self.addPictureButton setTitle:@"Replace" forState:UIControlStateNormal];
             }
         }];
-        [self.addPictureButton setTitle:@"Replace" forState:UIControlStateNormal];
     } else {
         [self.addPictureButton setTitle:@"Add" forState:UIControlStateNormal];
     }
@@ -133,7 +146,7 @@
     CGSize maxSize = CGSizeMake(CGRectGetWidth(self.userDescriptionTextView.bounds), CGFLOAT_MAX);
     
     CGSize userDescriptionTextViewSize = [self.userDescriptionTextView sizeThatFits:maxSize];
-    self.userDescriptionTextViewHeight.constant = userDescriptionTextViewSize.height;
+    self.userDescriptionTextViewHeight.constant = userDescriptionTextViewSize.height + 20;
     [self.userDescriptionTextView scrollRangeToVisible:NSRangeFromString(self.userDescriptionTextView.text)];
 
 }

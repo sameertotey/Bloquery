@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gPz-kt-v9q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gPz-kt-v9q">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -57,9 +57,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Questions" prompt="List of Questions" id="gn8-LO-ceJ">
-                        <barButtonItem key="leftBarButtonItem" title="Logoff" id="af5-GJ-Tpa">
+                        <barButtonItem key="leftBarButtonItem" title="Login" id="af5-GJ-Tpa">
                             <connections>
-                                <action selector="loginLogoff:" destination="19i-G4-o4O" id="2Wy-rx-GhS"/>
+                                <action selector="loginOrProfile:" destination="19i-G4-o4O" id="29z-p6-mge"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="qes-nX-syW">
@@ -69,7 +69,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="questionsTableView" destination="lfR-Vd-6VA" id="G4O-y4-gv0"/>
                         <segue destination="XHE-QH-eBN" kind="show" identifier="showUserProfile" id="7Ui-OU-iWJ"/>
                     </connections>
                 </tableViewController>
@@ -309,13 +308,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEr-hs-tb6">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter anything you like to share on your profile here" translatesAutoresizingMaskIntoConstraints="NO" id="FEr-hs-tb6">
                                 <rect key="frame" x="16" y="130" width="528" height="59"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.77669550189203196" green="0.80028378902146735" blue="0.83536537247474751" alpha="0.94000000000000006" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="tuc-8D-iRm"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -379,6 +377,7 @@
                         <outlet property="emailAddressLabel" destination="xKz-gQ-xYj" id="EX3-sR-CgH"/>
                         <outlet property="saveButton" destination="WG1-lX-meg" id="BZQ-SX-jU7"/>
                         <outlet property="userDescriptionTextView" destination="FEr-hs-tb6" id="hbb-r5-0Y5"/>
+                        <outlet property="userDescriptionTextViewHeight" destination="tuc-8D-iRm" id="GJv-jB-zUU"/>
                         <outlet property="userImageView" destination="Hvt-FM-Q9s" id="qDC-5O-DjG"/>
                         <outlet property="userNameLabel" destination="3Co-xL-7hP" id="NYr-fj-rFx"/>
                     </connections>
@@ -405,6 +404,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="EPg-7X-jOC"/>
+        <segue reference="7Ui-OU-iWJ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -16,7 +16,6 @@
 #import "UserProfileViewController.h"
 
 @interface QuestionsTableViewController () <QuestionTableViewCellDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
 @end
 
 @implementation QuestionsTableViewController
@@ -32,9 +31,9 @@
     
     if (![PFUser currentUser]) { // No user logged in
         [self login];
-        self.navigationItem.leftBarButtonItem.title = @"Logoff";
      }
-    
+    self.navigationItem.leftBarButtonItem.title = @"Profile";
+
     // Initialize the refresh control.
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor purpleColor];
@@ -49,6 +48,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [self getLatestQuestions];
+    if (![PFUser currentUser]) { // No user logged in
+        self.navigationItem.leftBarButtonItem.title = @"Login";
+    } else {
+        self.navigationItem.leftBarButtonItem.title = @"Profile";
+    }
+
 }
 
 - (void) dealloc {
@@ -60,19 +65,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-// toggle the Login and Logoff functons on pressing the left bar button of the root controller
-- (IBAction)loginLogoff:(UIBarButtonItem *)sender {
+- (void)showUserProfile {
+    [self performSegueWithIdentifier:@"showUserProfile" sender:[PFUser currentUser]];
+}
+
+// if Current user exists, show user profile, else present the login page
+- (IBAction)loginOrProfile:(UIBarButtonItem *)sender {
     if ([PFUser currentUser]) {
-        [PFUser logOut];
-        sender.title = @"Login";
+        [self showUserProfile];
     } else {
         [self login];
-        sender.title = @"Logoff";
+        sender.title = @"Profile";
     }
 }
 
 - (void)QuestionsLoaded:(NSNotification *)notification {
-    [self.questionsTableView reloadData];
+    [self.tableView reloadData];
     if (self.refreshControl) {
         [self.refreshControl endRefreshing];
     }
@@ -226,6 +234,7 @@
 
 // Sent to the delegate when the log in attempt fails.
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
+    self.navigationItem.leftBarButtonItem.title = @"Login";
     NSLog(@"Failed to log in...");
 }
 
